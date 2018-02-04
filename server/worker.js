@@ -37,4 +37,5 @@ class Worker extends SCWorker {
   }
 }
 
+/* eslint-disable no-new */
 new Worker()

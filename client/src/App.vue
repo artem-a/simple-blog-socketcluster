@@ -1,8 +1,24 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+  <v-app>
+    <v-toolbar app dark color="primary">
+      <v-spacer></v-spacer>
+      <v-toolbar-title>
+        Sign In
+      </v-toolbar-title>
+      <v-toolbar-title>
+        Sign Up
+      </v-toolbar-title>
+    </v-toolbar>
+
+    <v-content>
+      <router-view />
+    </v-content>
+
+    <v-footer app>
+      <v-spacer></v-spacer>
+      <div>&copy; 2018</div>
+    </v-footer>
+  </v-app>
 </template>
 
 <script>
@@ -11,13 +27,6 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="stylus">
+  @import "stylus/main"
 </style>

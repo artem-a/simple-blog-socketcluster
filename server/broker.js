@@ -24,4 +24,5 @@ class Broker extends SCBroker {
   }
 }
 
+/* eslint-disable no-new */
 new Broker()

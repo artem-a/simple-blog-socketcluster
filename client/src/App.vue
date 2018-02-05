@@ -1,12 +1,24 @@
 <template>
   <v-app>
     <v-toolbar app dark color="primary">
-      <v-spacer></v-spacer>
       <v-toolbar-title>
-        Sign In
+        <router-link
+          to="/"
+          tag="span"
+          class="menu-item"
+          exact>
+          Home
+        </router-link>
       </v-toolbar-title>
-      <v-toolbar-title>
-        Sign Up
+      <v-spacer></v-spacer>
+      <v-toolbar-title v-for="(item, key) in menuItems" :key="key">
+        <router-link
+          :to="item.link"
+          tag="span"
+          class="menu-item"
+          exact>
+          {{ item.title }}
+        </router-link>
       </v-toolbar-title>
     </v-toolbar>
 
@@ -23,10 +35,21 @@
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+
+  computed: {
+    menuItems () {
+      return [
+        { link: '/sign-up', title: 'SignUp' }
+      ]
+    }
+  }
 }
 </script>
 
 <style lang="stylus">
   @import "stylus/main"
+
+  .menu-item
+    cursor pointer
 </style>

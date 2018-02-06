@@ -18,6 +18,11 @@ export default new Router({
       path: '/sign-up',
       name: 'signup',
       component: () => lazyLoad('SignUp')
+    },
+    {
+      path: '/sign-in',
+      name: 'signin',
+      component: () => lazyLoad('SignIn')
     }
   ]
 })

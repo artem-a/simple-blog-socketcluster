@@ -9,39 +9,10 @@
                 <v-layout row>
                   <v-flex xs12>
                     <v-text-field
-                      label="First name"
-                      name="firstName"
-                      data-vv-as="first name"
-                      v-model.trim="firstName"
-                      :error-messages="errors.collect('firstName')"
-                      v-validate="'required'"
-                      required />
-                  </v-flex>
-                </v-layout>
-
-                <v-layout row>
-                  <v-flex xs12>
-                    <v-text-field
-                      label="Last name"
-                      name="lastName"
-                      data-vv-as="lats name"
-                      v-model.trim="lastName"
-                      :error-messages="errors.collect('lastName')"
-                      v-validate="'required'"
-                      required />
-                  </v-flex>
-                </v-layout>
-
-                <v-layout row>
-                  <v-flex xs-12>
-                    <v-text-field
                       label="Email"
                       type="email"
-                      name="email"
                       v-model.trim="email"
-                      :error-messages="errors.collect('email')"
-                      v-validate="'required|email'"
-                      required />
+                      v-validate="'required|email'" />
                   </v-flex>
                 </v-layout>
 
@@ -50,11 +21,8 @@
                     <v-text-field
                       label="Password"
                       type="password"
-                      name="password"
                       v-model.trim="password"
-                      :error-messages="errors.collect('password')"
-                      v-validate="'required|min:6'"
-                      required />
+                      v-validate="'required'" />
                   </v-flex>
                 </v-layout>
 
@@ -63,7 +31,7 @@
                     <v-btn
                       type="submit"
                       color="primary">
-                      Sign Up
+                      Sing In
                     </v-btn>
                   </v-flex>
                 </v-layout>
@@ -78,7 +46,7 @@
 
 <script>
 export default {
-  name: 'SignUp',
+  name: 'SignIn',
 
   $_veeValidate: {
     validator: 'new'
@@ -86,8 +54,6 @@ export default {
 
   data () {
     return {
-      firstName: '',
-      lastName: '',
       email: '',
       password: ''
     }
@@ -96,15 +62,13 @@ export default {
   methods: {
     async onSubmit () {
       const isValid = await this.$validator.validateAll()
+
       if (isValid) {
         const data = {
-          firstName: this.firstName,
-          lastName: this.lastName,
           email: this.email,
           password: this.password
         }
 
-        console.log('send data to server')
         console.log(data)
       }
     }

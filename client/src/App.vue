@@ -40,7 +40,8 @@ export default {
   computed: {
     menuItems () {
       return [
-        { link: '/sign-up', title: 'SignUp' }
+        { link: 'sign-up', title: 'Sign Up' },
+        { link: 'sign-in', title: 'Sign In' }
       ]
     }
   }

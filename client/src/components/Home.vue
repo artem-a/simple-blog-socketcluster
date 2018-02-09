@@ -1,11 +1,9 @@
 <template>
-  <v-container>
-    <v-layout row wrap>
-      <v-flex>
-        {{ msg }}
-      </v-flex>
-    </v-layout>
-  </v-container>
+  <v-layout row wrap>
+    <v-flex>
+      {{ msg }}
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>

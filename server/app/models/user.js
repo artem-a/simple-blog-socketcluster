@@ -1,6 +1,7 @@
 'use strict'
 
 const bcrypt = require('bcrypt')
+const _ = require('lodash')
 
 const cryptedPassword = instance => {
   if (instance.changed('password')) {
@@ -11,16 +12,28 @@ const cryptedPassword = instance => {
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: true,
+        notEmpty: true
+      }
+    },
 
     firstName: {
       field: 'first_name',
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
     },
 
     lastName: {
       field: 'last_name',
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
     },
 
     cryptedPassword: {
@@ -49,7 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
 
     classMethods: {
-      associate: function (models) {
+      associate (models) {
         // associations can be defined here
       }
     }
@@ -57,6 +70,11 @@ module.exports = (sequelize, DataTypes) => {
 
   // Hooks
   User.beforeCreate(cryptedPassword)
+
+  // Instance methods
+  User.prototype.toJSON = function () {
+    return _.omit(this.get(), ['cryptedPassword', 'password'])
+  }
 
   return User
 }

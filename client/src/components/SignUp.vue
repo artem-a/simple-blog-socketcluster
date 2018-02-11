@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex xs12 sm4 offset-sm4>
       <v-card>
         <v-card-text>
           <v-container>
@@ -61,7 +61,9 @@
                 <v-flex xs12>
                   <v-btn
                     type="submit"
-                    color="primary">
+                    color="primary"
+                    :loading="loading"
+                    :disabled="loading">
                     Sign Up
                   </v-btn>
                 </v-flex>
@@ -75,6 +77,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SignUp',
 
@@ -91,6 +95,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters(['loading', 'error'])
+  },
+
   methods: {
     async onSubmit () {
       const isValid = await this.$validator.validateAll()
@@ -103,8 +111,7 @@ export default {
           password: this.password
         }
 
-        console.log('send data to server')
-        console.log(data)
+        this.$store.dispatch('signUp', data)
       }
     }
   }

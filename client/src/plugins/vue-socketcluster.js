@@ -47,7 +47,16 @@ export default {
       const moduleName = opts.moduleName || 'ws'
       store.registerModule(moduleName, {
         namespaced: true,
-        state: { client: socket }
+
+        state: {
+          client: socket
+        },
+
+        getters: {
+          client (state) {
+            return state.client
+          }
+        }
       })
     }
 

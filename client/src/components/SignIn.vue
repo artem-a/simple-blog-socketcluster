@@ -29,7 +29,9 @@
                 <v-flex xs12>
                   <v-btn
                     type="submit"
-                    color="primary">
+                    color="primary"
+                    :loading="loading"
+                    :disabled="loading">
                     Sing In
                   </v-btn>
                 </v-flex>
@@ -43,6 +45,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SignIn',
 
@@ -57,6 +61,10 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters(['loading', 'error'])
+  },
+
   methods: {
     async onSubmit () {
       const isValid = await this.$validator.validateAll()
@@ -67,7 +75,7 @@ export default {
           password: this.password
         }
 
-        console.log(data)
+        this.$store.dispatch('signIn', data)
       }
     }
   }

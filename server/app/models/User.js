@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt')
 const _ = require('lodash')
 
-const cryptedPassword = instance => {
+const encryptPassword = instance => {
   if (instance.changed('password')) {
     return bcrypt.hash(instance.password, 10)
       .then(hash => (instance.cryptedPassword = hash))
@@ -59,17 +59,36 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     tableName: 'users',
-    timestamps: true,
+    timestamps: true
 
-    classMethods: {
-      associate (models) {
-        // associations can be defined here
-      }
-    }
+    // classMethods: {
+    //   associate (models) {
+    //     // associations can be defined here
+    //   }
+    // }
   })
 
   // Hooks
-  User.beforeCreate(cryptedPassword)
+  User.beforeCreate(encryptPassword)
+
+  // Class methods
+  User.authenticate = async function ({ email, password }) {
+    let user = await this.findByEmail(email)
+
+    if (_.isEmpty(user)) {
+      user = User.build({ cryptedPassword: 'protect-from-bruteforce' })
+    }
+
+    if (await bcrypt.compare(password, user.cryptedPassword)) {
+      return user
+    }
+
+    return null
+  }
+
+  User.findByEmail = function (email) {
+    return this.findOne({ where: { email }})
+  }
 
   // Instance methods
   User.prototype.toJSON = function () {

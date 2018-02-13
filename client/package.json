@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "loaders.css": "^0.1.2",
+    "lodash.isempty": "^4.4.0",
     "lodash.pick": "^4.4.0",
     "socketcluster-client": "^9.0.3",
     "vee-validate": "^2.0.3",

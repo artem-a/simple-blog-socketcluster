@@ -20,6 +20,11 @@
           {{ item.title }}
         </router-link>
       </v-toolbar-title>
+      <v-toolbar-title>
+        <a class="white--text" @click.prevent="signOut" v-if="isLoggedIn">
+          Sign Out
+        </a>
+      </v-toolbar-title>
     </v-toolbar>
 
     <v-content>
@@ -36,15 +41,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'App',
 
   computed: {
+    ...mapGetters(['isLoggedIn']),
+
     menuItems () {
+      if (this.isLoggedIn) {
+        return []
+      }
+
       return [
         { link: 'sign-up', title: 'Sign Up' },
         { link: 'sign-in', title: 'Sign In' }
       ]
+    }
+  },
+
+  methods: {
+    signOut () {
+      this.$store.dispatch('signOut')
+      this.$router.push({ name: 'signin' })
     }
   }
 }

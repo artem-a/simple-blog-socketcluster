@@ -15,7 +15,7 @@ class Worker extends SCWorker {
     const command = commands[type]
 
     if (!command) {
-      throw new Error('Invalid command type')
+      throw new Error(`Invalid command type: ${type}`)
     }
 
     return services.exec(command, args)

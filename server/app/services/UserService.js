@@ -3,7 +3,7 @@
 const { User } = require('../models')
 
 module.exports = {
-  async create (data) {
-    return await User.create(data)
+  async create (data, socket) {
+    await User.create(data)
   }
 }

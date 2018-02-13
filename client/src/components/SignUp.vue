@@ -1,5 +1,10 @@
 <template>
   <v-layout row wrap>
+    <v-flex xs12 sm4 offset-sm4 mb-2 v-if="error">
+      <app-alert @dismissed="onDismissed"
+        :text="error.message"/>
+    </v-flex>
+
     <v-flex xs12 sm4 offset-sm4>
       <v-card>
         <v-card-text>
@@ -77,6 +82,7 @@
 </template>
 
 <script>
+import isEmpty from 'lodash.isempty'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -112,7 +118,16 @@ export default {
         }
 
         this.$store.dispatch('signUp', data)
+          .then(() => {
+            if (isEmpty(this.error)) {
+              this.$router.push({ name: 'signin' })
+            }
+          })
       }
+    },
+
+    onDismissed () {
+      this.$store.dispatch('clearError')
     }
   }
 }

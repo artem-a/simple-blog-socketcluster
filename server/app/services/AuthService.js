@@ -5,7 +5,7 @@ const { isEmpty } = require('lodash')
 const { User } = require('../models')
 
 module.exports = {
-  async local (data) {
+  async local (data, socket) {
     if (isEmpty(data.email.trim()) || isEmpty(data.password)) {
       throw new Error('Invalid credentials')
     }
@@ -15,6 +15,8 @@ module.exports = {
     if (isEmpty(user)) {
       throw new Error('Invalid credentials')
     }
+
+    socket.setAuthToken(user)
 
     return user
   }

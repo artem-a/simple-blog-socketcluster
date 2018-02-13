@@ -1,5 +1,10 @@
 <template>
   <v-layout row wrap>
+    <v-flex xs12 sm4 offset-sm4 mb-2 v-if="error">
+      <app-alert @dismissed="onDismissed"
+        :text="error.message"/>
+    </v-flex>
+
     <v-flex xs12 sm4 offset-sm4>
       <v-card>
         <v-card-text>
@@ -65,6 +70,15 @@ export default {
     ...mapGetters(['loading', 'error'])
   },
 
+  socket: {
+    events: {
+      authenticate (token) {
+        this.$store.dispatch('setAuthToken', token)
+        this.$router.push({ name: 'home' })
+      }
+    }
+  },
+
   methods: {
     async onSubmit () {
       const isValid = await this.$validator.validateAll()
@@ -77,6 +91,10 @@ export default {
 
         this.$store.dispatch('signIn', data)
       }
+    },
+
+    onDismissed () {
+      this.$store.dispatch('clearError')
     }
   }
 }

@@ -70,15 +70,6 @@ export default {
     ...mapGetters(['loading', 'error'])
   },
 
-  socket: {
-    events: {
-      authenticate (token) {
-        this.$store.dispatch('setAuthToken', token)
-        this.$router.push({ name: 'home' })
-      }
-    }
-  },
-
   methods: {
     async onSubmit () {
       const isValid = await this.$validator.validateAll()
@@ -90,6 +81,11 @@ export default {
         }
 
         this.$store.dispatch('signIn', data)
+          .then(err => {
+            if (!err) {
+              this.$router.push({ name: 'home' })
+            }
+          })
       }
     },
 

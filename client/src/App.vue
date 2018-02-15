@@ -61,6 +61,13 @@ export default {
     }
   },
 
+  created () {
+    const authToken = localStorage.getItem('socketCluster.authToken')
+    if (authToken) {
+      this.$store.dispatch('autoSignIn', authToken)
+    }
+  },
+
   methods: {
     signOut () {
       this.$store.dispatch('signOut')

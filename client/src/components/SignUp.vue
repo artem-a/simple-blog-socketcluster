@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import isEmpty from 'lodash.isempty'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -118,8 +117,8 @@ export default {
         }
 
         this.$store.dispatch('signUp', data)
-          .then(() => {
-            if (isEmpty(this.error)) {
+          .then(err => {
+            if (!err) {
               this.$router.push({ name: 'signin' })
             }
           })

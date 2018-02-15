@@ -4,8 +4,7 @@ import * as getters from './getters'
 
 export default {
   state: {
-    user: null,
-    authToken: null
+    user: null
   },
 
   mutations,

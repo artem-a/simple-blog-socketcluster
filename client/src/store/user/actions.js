@@ -1,3 +1,5 @@
+import { setUser, removeUser } from '@/services/local-auth'
+
 export const signUp = ({ commit, getters }, payload) => {
   commit('CLEAR_ERROR')
   commit('SET_LOADING', true)
@@ -8,8 +10,7 @@ export const signUp = ({ commit, getters }, payload) => {
   return new Promise(resolve => {
     ws.emit('api', data, (err, res) => {
       if (err) {
-        const { name, message } = err
-        commit('SET_ERROR', { name, message })
+        commit('SET_ERROR', err)
       }
 
       commit('SET_LOADING', false)
@@ -28,10 +29,10 @@ export const signIn = ({ commit, getters }, payload) => {
   return new Promise(resolve => {
     ws.emit('api', data, (err, res) => {
       if (err) {
-        const { name, message } = err
-        commit('SET_ERROR', { name, message })
+        commit('SET_ERROR', err)
       } else {
         commit('SET_USER', res)
+        setUser(res)
       }
 
       commit('SET_LOADING', false)
@@ -46,15 +47,19 @@ export const autoSignIn = async ({ commit, getters }, payload) => {
 
   const ws = getters['ws/client']
 
-  ws.authenticate(payload, (err, res) => {
-    if (err) {
-      const { name, message } = err
-      commit('SET_ERROR', { name, message })
-    } else {
-      commit('SET_USER', ws.getAuthToken())
-    }
+  return new Promise(resolve => {
+    ws.authenticate(payload, (err, res) => {
+      if (err) {
+        commit('SET_ERROR', err)
+      } else {
+        const user = ws.getAuthToken()
+        commit('SET_USER', user)
+        setUser(user)
+      }
 
-    commit('SET_LOADING', false)
+      commit('SET_LOADING', false)
+      resolve(err)
+    })
   })
 }
 
@@ -62,5 +67,6 @@ export const signOut = ({ commit, getters }) => {
   const ws = getters['ws/client']
 
   ws.deauthenticate()
+  removeUser()
   commit('SET_USER', null)
 }

@@ -83,7 +83,7 @@ export default {
         this.$store.dispatch('signIn', data)
           .then(err => {
             if (!err) {
-              this.$router.push({ name: 'home' })
+              this.redirectBackOrTo()
             }
           })
       }
@@ -91,6 +91,11 @@ export default {
 
     onDismissed () {
       this.$store.dispatch('clearError')
+    },
+
+    redirectBackOrTo () {
+      const location = this.$route.query.redirect || { name: 'home' }
+      this.$router.push(location)
     }
   }
 }

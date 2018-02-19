@@ -8,6 +8,7 @@ const healthChecker = require('sc-framework-health-check')
 const _ = require('lodash')
 
 const commands = require('./config/commands')
+const models = require('./app/models')
 const services = require('./app/services')
 
 class Worker extends SCWorker {
@@ -42,6 +43,30 @@ class Worker extends SCWorker {
     healthChecker.attach(this, app)
 
     httpServer.on('request', app)
+
+    const {
+      MIDDLEWARE_AUTHENTICATE,
+      MIDDLEWARE_EMIT
+    } = scServer
+
+    scServer.addMiddleware(MIDDLEWARE_AUTHENTICATE, async (req, next) => {
+      const { id, email } = req.authToken
+      const userExists = await models.User.isExists({ id, email })
+
+      if (userExists) {
+        next()
+      } else {
+        next(new Error('This account no longer exist or has been deleted'))
+      }
+    })
+
+    scServer.addMiddleware(MIDDLEWARE_EMIT, (req, next) => {
+      if (req.authTokenExpiredError) {
+        next(req.authTokenExpiredError)
+      } else {
+        next()
+      }
+    })
 
     /*
       In here we handle our incoming realtime connections and listen for events.

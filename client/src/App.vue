@@ -65,12 +65,13 @@ export default {
     const authToken = localStorage.getItem('socketCluster.authToken')
 
     if (authToken) {
-      this.$store.dispatch('autoSignIn', authToken)
-        .then(err => {
-          if (err) {
-            this.signOut()
-          }
-        })
+      this.$ws.once('connect', ({ isAuthenticated }) => {
+        if (isAuthenticated) {
+          this.$store.dispatch('autoSignIn', this.$ws.authToken)
+        } else {
+          this.signOut()
+        }
+      })
     }
   },
 

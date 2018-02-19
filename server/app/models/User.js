@@ -90,6 +90,11 @@ module.exports = (sequelize, DataTypes) => {
     return this.findOne({ where: { email }})
   }
 
+  User.isExists = async function (attrs) {
+    const count = await this.count({ where: attrs })
+    return count > 0
+  }
+
   // Instance methods
   User.prototype.toJSON = function () {
     return _.omit(this.get(), ['cryptedPassword', 'password'])

@@ -15,11 +15,11 @@
     "loaders.css": "^0.1.2",
     "lodash.isempty": "^4.4.0",
     "lodash.pick": "^4.4.0",
-    "socketcluster-client": "^9.0.3",
-    "vee-validate": "^2.0.3",
+    "socketcluster-client": "^10.1.1",
+    "vee-validate": "^2.0.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vuetify": "^0.17.7",
+    "vuetify": "^1.0.1",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

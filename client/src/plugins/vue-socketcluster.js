@@ -41,7 +41,7 @@ export default {
 
     const { store, port } = opts
 
-    const socket = SC.connect({ port })
+    const socket = SC.create({ port })
 
     if (isDef(store)) {
       const moduleName = opts.moduleName || 'ws'

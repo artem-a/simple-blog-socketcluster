@@ -60,13 +60,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'users',
     timestamps: true
-
-    // classMethods: {
-    //   associate (models) {
-    //     // associations can be defined here
-    //   }
-    // }
   })
+
+  // Associations
+  User.associate = function (models) {
+    models.User.hasMany(models.Blog)
+  }
 
   // Hooks
   User.beforeCreate(encryptPassword)
@@ -87,7 +86,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   User.findByEmail = function (email) {
-    return this.findOne({ where: { email }})
+    return this.findOne({ where: { email } })
   }
 
   User.isExists = async function (attrs) {

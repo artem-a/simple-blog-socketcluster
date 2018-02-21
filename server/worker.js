@@ -1,5 +1,4 @@
 const SCWorker = require('socketcluster/scworker')
-// const fs = require('fs')
 const express = require('express')
 const serveStatic = require('serve-static')
 const path = require('path')

@@ -9,12 +9,9 @@
 
 require('dotenv').config()
 
-// const fs = require('fs')
 const path = require('path')
 const argv = require('minimist')(process.argv.slice(2))
 const scHotReboot = require('sc-hot-reboot')
-const scErrors = require('sc-errors')
-const TimeoutError = scErrors.TimeoutError
 
 const fsUtil = require('socketcluster/fsutil')
 const waitForFile = fsUtil.waitForFile
@@ -36,7 +33,7 @@ const options = {
   appName: argv.n || process.env.SOCKETCLUSTER_APP_NAME || null,
   authKey: argv.ak || process.env.SECRET_KEY_BASE || null,
   workerController: workerControllerPath || path.join(__dirname, 'worker.js'),
-  brokerController: brokerControllerPath || path.join(__dirname, '/broker.js'),
+  brokerController: brokerControllerPath || path.join(__dirname, 'broker.js'),
   workerClusterController: workerClusterControllerPath || null,
   socketChannelLimit: Number(process.env.SOCKETCLUSTER_SOCKET_CHANNEL_LIMIT) || 1000,
   clusterStateServerHost: argv.cssh || process.env.SCC_STATE_SERVER_HOST || null,

@@ -7,26 +7,38 @@
 
     <v-flex xs12 sm4 offset-sm4>
       <v-card>
-        <v-card-text>
-          <v-container>
-            <v-form @submit.prevent="onSubmit">
+        <v-container>
+          <v-form @submit.prevent="onSubmit">
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
-                    label="Email"
-                    type="email"
-                    v-model.trim="email"
-                    v-validate="'required|email'" />
+                    label="Name"
+                    name="name"
+                    data-vv-as="name"
+                    v-model.trim="name"
+                    :error-messages="errors.collect('name')"
+                    v-validate="'required'"
+                    required />
                 </v-flex>
               </v-layout>
 
               <v-layout row>
                 <v-flex xs12>
                   <v-text-field
-                    label="Password"
-                    type="password"
-                    v-model.trim="password"
-                    v-validate="'required'" />
+                    label="Slug"
+                    name="slug"
+                    v-model.trim="slug" />
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    multi-line
+                    rows="3"
+                    label="Description"
+                    name="description"
+                    v-model.trim="description" />
                 </v-flex>
               </v-layout>
 
@@ -37,13 +49,12 @@
                     color="primary"
                     :loading="loading"
                     :disabled="loading">
-                    Sing In
+                    Save
                   </v-btn>
                 </v-flex>
               </v-layout>
-            </v-form>
-          </v-container>
-        </v-card-text>
+          </v-form>
+        </v-container>
       </v-card>
     </v-flex>
   </v-layout>
@@ -53,7 +64,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'SignIn',
+  name: 'BlogsNew',
 
   $_veeValidate: {
     validator: 'new'
@@ -61,8 +72,9 @@ export default {
 
   data () {
     return {
-      email: '',
-      password: ''
+      name: 'My Blog',
+      slug: '',
+      description: 'This is my awesome blog'
     }
   },
 
@@ -76,14 +88,15 @@ export default {
 
       if (isValid) {
         const data = {
-          email: this.email,
-          password: this.password
+          name: this.name,
+          slug: this.slug,
+          description: this.description
         }
 
-        this.$store.dispatch('signIn', data)
+        this.$store.dispatch('createBlog', data)
           .then(err => {
             if (!err) {
-              this.redirectBackOrTo()
+              // TODO: redirect to edit page
             }
           })
       }
@@ -91,17 +104,7 @@ export default {
 
     onDismissed () {
       this.$store.dispatch('clearError')
-    },
-
-    redirectBackOrTo () {
-      const location = this.$route.query.redirect || { name: 'dashboard' }
-      this.$router.push(location)
     }
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-  button[type="submit"]
-    float right
-</style>

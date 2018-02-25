@@ -32,7 +32,14 @@ export default new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: () => lazyLoad('Dashboard'),
-      beforeEnter: authRequired
+      beforeEnter: authRequired,
+      children: [
+        {
+          path: 'blogs/new',
+          name: 'blogsnew',
+          component: () => lazyLoad('Blogs/New')
+        }
+      ]
     }
   ]
 })

@@ -1,7 +1,18 @@
 'use strict'
 
+const { slugify } = require('transliteration')
+const { isEmpty } = require('lodash')
+
 module.exports = (sequelize, DataTypes) => {
   const Blog = sequelize.define('Blog', {
+    userId: {
+      field: 'user_id',
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: true
+      }
+    },
+
     name: {
       type: DataTypes.STRING,
       validate: {
@@ -13,6 +24,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       validate: {
         notEmpty: true
+      },
+      set (val) {
+        if (isEmpty(val.trim())) {
+          val = this.getDataValue('name')
+        }
+
+        this.setDataValue('slug', slugify(val))
       }
     },
 

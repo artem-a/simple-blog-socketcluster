@@ -51,12 +51,14 @@ export default {
 
     menuItems () {
       if (this.isLoggedIn) {
-        return []
+        return [
+          { link: '/dashboard', title: 'Dashboard' }
+        ]
       }
 
       return [
-        { link: 'sign-up', title: 'Sign Up' },
-        { link: 'sign-in', title: 'Sign In' }
+        { link: '/sign-up', title: 'Sign Up' },
+        { link: '/sign-in', title: 'Sign In' }
       ]
     }
   },

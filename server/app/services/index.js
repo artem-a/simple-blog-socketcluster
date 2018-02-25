@@ -2,10 +2,12 @@
 
 const AuthService = require('./AuthService')
 const UserService = require('./UserService')
+const BlogService = require('./BlogService')
 
 module.exports = {
   AuthService,
   UserService,
+  BlogService,
 
   exec (command, args) {
     const [serviceName, method] = command.split('@')

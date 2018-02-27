@@ -72,9 +72,9 @@ export default {
 
   data () {
     return {
-      name: 'My Blog',
+      name: '',
       slug: '',
-      description: 'This is my awesome blog'
+      description: ''
     }
   },
 

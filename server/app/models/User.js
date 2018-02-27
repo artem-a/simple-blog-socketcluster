@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   User.associate = function (models) {
-    models.User.hasMany(models.Blog)
+    models.User.hasMany(models.Blog, { foreignKey: 'userId' })
   }
 
   // Hooks

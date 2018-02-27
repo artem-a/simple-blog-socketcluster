@@ -52,7 +52,12 @@ module.exports = (sequelize, DataTypes) => {
 
   // Associations
   Blog.associate = function (models) {
-    models.Blog.belongsTo(models.User)
+    models.Blog.belongsTo(models.User, { foreignKey: 'id' })
+  }
+
+  // Class methods
+  Blog.findByUserId = function (userId) {
+    return this.findAll({ where: { userId } })
   }
 
   return Blog

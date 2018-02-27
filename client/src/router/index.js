@@ -35,9 +35,19 @@ export default new Router({
       beforeEnter: authRequired,
       children: [
         {
+          path: 'blogs',
+          name: 'blogs_list',
+          component: () => lazyLoad('Blogs/List')
+        },
+        {
           path: 'blogs/new',
-          name: 'blogsnew',
+          name: 'blogs_new',
           component: () => lazyLoad('Blogs/New')
+        },
+        {
+          path: 'blogs/:id/edit',
+          name: 'blogs_edit',
+          component: () => lazyLoad('Blogs/Edit')
         }
       ]
     }

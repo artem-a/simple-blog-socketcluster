@@ -17,6 +17,10 @@ module.exports = {
       throw new Error(`Service ${serviceName} not found`)
     }
 
+    if (!service[method]) {
+      throw new Error(`Method ${method} not found in ${serviceName}`)
+    }
+
     return service[method].apply(service, args)
   }
 }

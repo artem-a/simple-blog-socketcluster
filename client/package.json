@@ -14,7 +14,11 @@
   "dependencies": {
     "loaders.css": "^0.1.2",
     "lodash.isempty": "^4.4.0",
+    "lodash.isequal": "^4.5.0",
+    "lodash.isobject": "^3.0.2",
+    "lodash.merge": "^4.6.1",
     "lodash.pick": "^4.4.0",
+    "lodash.transform": "^4.6.0",
     "socketcluster-client": "^10.1.1",
     "vee-validate": "^2.0.4",
     "vue": "^2.5.2",

@@ -96,7 +96,7 @@ export default {
         this.$store.dispatch('createBlog', data)
           .then(err => {
             if (!err) {
-              // TODO: redirect to edit page
+              this.$router.push('/dashboard/blogs')
             }
           })
       }

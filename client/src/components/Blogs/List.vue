@@ -6,12 +6,13 @@
       |
       {{ blog.description }}
       |
-      <v-btn
+<!--       <v-btn
         small
         color="info"
         :to="`/dashboard/blogs/${blog.id}/edit`">
         Edit
-      </v-btn>
+      </v-btn> -->
+      <blog-edit :blog="blog" />
       <v-btn
         small
         color="warning"
@@ -25,8 +26,14 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import Edit from './Edit'
+
 export default {
   name: 'BlogsList',
+
+  components: {
+    'blog-edit': Edit
+  },
 
   computed: {
     ...mapGetters(['loading', 'errors', 'blogs'])

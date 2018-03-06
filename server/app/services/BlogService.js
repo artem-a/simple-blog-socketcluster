@@ -5,17 +5,31 @@ const { isEmpty } = require('lodash')
 const { Blog } = require('../models')
 
 module.exports = {
-  async list (_data, socket) {
-    const blogs = await Blog.findByUserId(socket.authToken.id)
+  async list (_data, { authToken }) {
+    const blogs = await Blog.findByUserId(authToken.id)
 
     return blogs
   },
 
-  async create (data, socket) {
+  async create (data, { authToken }) {
     const blog = await Blog.create({
       ...data,
-      userId: socket.authToken.id
+      userId: authToken.id
     })
+
+    return blog
+  },
+
+  async update (data, { authToken }) {
+    const blog = await Blog.findOne({
+      where: { id: data.id, userId: authToken.id }
+    })
+
+    if (isEmpty(blog)) {
+      throw new Error('Blog not found')
+    }
+
+    await blog.update(data)
 
     return blog
   },

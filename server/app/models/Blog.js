@@ -53,6 +53,8 @@ module.exports = (sequelize, DataTypes) => {
   // Associations
   Blog.associate = function (models) {
     models.Blog.belongsTo(models.User, { foreignKey: 'id' })
+
+    models.Blog.hasMany(models.Post, { foreignKey: 'blogId' })
   }
 
   // Class methods

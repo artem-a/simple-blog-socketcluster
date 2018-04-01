@@ -12,22 +12,12 @@
             <v-layout row>
               <v-flex xs12>
                 <v-text-field
-                  label="Name"
-                  name="name"
-                  data-vv-as="name"
-                  v-model.trim="name"
-                  :error-messages="errors.collect('name')"
-                  v-validate="'required'"
-                  required />
-              </v-flex>
-            </v-layout>
-
-            <v-layout row>
-              <v-flex xs12>
-                <v-text-field
-                  label="Slug"
-                  name="slug"
-                  v-model.trim="slug" />
+                  label="Title"
+                  name="title"
+                  data-vv-as="title"
+                  v-model.trim="title"
+                  :error-messages="errors.collect('title')"
+                  v-validate="'required'" />
               </v-flex>
             </v-layout>
 
@@ -36,9 +26,12 @@
                 <v-text-field
                   multi-line
                   rows="3"
-                  label="Description"
-                  name="description"
-                  v-model.trim="description" />
+                  label="Body"
+                  name="body"
+                  data-vv-as="body"
+                  v-model.trim="body"
+                  :error-messages="errors.collect('body')"
+                  v-validate="'required'" />
               </v-flex>
             </v-layout>
 
@@ -64,7 +57,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'BlogNew',
+  name: 'PostNew',
 
   $_veeValidate: {
     validator: 'new'
@@ -72,9 +65,8 @@ export default {
 
   data () {
     return {
-      name: '',
-      slug: '',
-      description: ''
+      title: '',
+      body: ''
     }
   },
 
@@ -88,16 +80,14 @@ export default {
 
       if (isValid) {
         const data = {
-          name: this.name,
-          slug: this.slug,
-          description: this.description
+          blogId: parseInt(this.$route.params.id),
+          title: this.title,
+          body: this.body
         }
 
-        this.$store.dispatch('createBlog', data)
-          .then(err => {
-            if (!err) {
-              this.$router.push('/dashboard/blogs')
-            }
+        this.$store.dispatch('createPost', data)
+          .then(() => {
+            this.$router.push({ name: 'posts', params: { id: data.blogId } })
           })
       }
     },

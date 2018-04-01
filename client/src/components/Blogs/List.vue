@@ -19,6 +19,12 @@
         @click="deleteBlog(blog.id)">
         Delete
       </v-btn>
+      |
+      <v-btn small
+        color="success"
+        :to="{ name: 'posts', params: { id: blog.id }}">
+        Posts
+      </v-btn>
     </div>
   </div>
 </template>
@@ -29,7 +35,7 @@ import { mapGetters } from 'vuex'
 import Edit from './Edit'
 
 export default {
-  name: 'BlogsList',
+  name: 'Blogs',
 
   components: {
     'blog-edit': Edit

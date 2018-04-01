@@ -18,13 +18,13 @@ export default new Router({
     },
     {
       path: '/sign-up',
-      name: 'signup',
+      name: 'sign-up',
       component: () => lazyLoad('SignUp'),
       beforeEnter: notAuth
     },
     {
       path: '/sign-in',
-      name: 'signin',
+      name: 'sign-in',
       component: () => lazyLoad('SignIn'),
       beforeEnter: notAuth
     },
@@ -36,18 +36,28 @@ export default new Router({
       children: [
         {
           path: 'blogs',
-          name: 'blogs_list',
+          name: 'blogs',
           component: () => lazyLoad('Blogs/List')
         },
         {
           path: 'blogs/new',
-          name: 'blogs_new',
+          name: 'blog-new',
           component: () => lazyLoad('Blogs/New')
         },
         {
           path: 'blogs/:id/edit',
-          name: 'blogs_edit',
+          name: 'blog-edit',
           component: () => lazyLoad('Blogs/Edit')
+        },
+        {
+          path: 'blogs/:id/posts',
+          name: 'posts',
+          component: () => lazyLoad('Posts/List')
+        },
+        {
+          path: 'blogs/:id/posts/new',
+          name: 'post-new',
+          component: () => lazyLoad('Posts/New')
         }
       ]
     }

@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = (sequelize, DataTypes) => {
-  const Post = sequelize.define('posts', {
+  const Post = sequelize.define('Post', {
     blogId: {
       field: 'blog_id',
       type: DataTypes.INTEGER,
@@ -52,6 +52,11 @@ module.exports = (sequelize, DataTypes) => {
   Post.associate = function (models) {
     models.Post.belongsTo(models.Blog, { foreignKey: 'id' })
     models.Post.belongsTo(models.User, { foreignKey: 'id' })
+  }
+
+  // Class methods
+  Post.findByBlogId = function (blogId) {
+    return this.findAll({ where: { blogId } })
   }
 
   return Post

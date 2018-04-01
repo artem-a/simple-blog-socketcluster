@@ -16,7 +16,7 @@ module.exports = {
       throw new Error('Invalid credentials')
     }
 
-    socket.setAuthToken(user)
+    socket.setAuthToken(user.toJSON())
 
     return user
   }
